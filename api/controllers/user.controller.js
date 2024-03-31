@@ -45,7 +45,10 @@ export const updateUser = async(req,res)=>{
                 ...(avatar && {avatar})
             }
         })
-        res.status(200).send(updatedUser)
+
+        const {password:userPassword,...rest} = updatedUser
+
+        res.status(200).send(rest)
     } catch (err) {
         res.status(500).send("Failed to update users!")
     }
