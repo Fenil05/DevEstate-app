@@ -7,9 +7,9 @@ import UploadWidget from "../../components/uploadWidget/UploadWidget";
 import { useNavigate } from "react-router-dom";
 
 function NewPostPage() {
-  const [value,setValue] = useState("")
-  const [error,setError] = useState("")
-  const [images,setImages] = useState([])
+  const [value, setValue] = useState("");
+  const [images, setImages] = useState([]);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate()
 
@@ -17,7 +17,6 @@ function NewPostPage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
-    console.log(inputs);
 
     try {
       const res = await apiRequest.post("posts", {
@@ -48,9 +47,10 @@ function NewPostPage() {
       navigate("/"+res.data.id)
     } catch (err) {
       console.log(err);
-      setError(err.response.data.message);
+      setError(error);
     }
   };
+
   return (
     <div className="newPostPage">
       <div className="formContainer">
@@ -111,6 +111,7 @@ function NewPostPage() {
                 <option value="land">Land</option>
               </select>
             </div>
+
             <div className="item">
               <label htmlFor="utilities">Utilities Policy</label>
               <select name="utilities">
@@ -152,15 +153,14 @@ function NewPostPage() {
               <input min={0} id="restaurant" name="restaurant" type="number" />
             </div>
             <button className="sendButton">Add</button>
-            {error && <span>{error}</span>}
+            {error && <span>error</span>}
           </form>
         </div>
       </div>
-      <div className="sideContainer">{
-        images.map((image,index)=>(
-          <img src={image} key={index} />
-        ))
-      }
+      <div className="sideContainer">
+        {images.map((image, index) => (
+          <img src={image} key={index} alt="" />
+        ))}
         <UploadWidget
         uwConfig={{
           cloudName:"doahplnvf",
